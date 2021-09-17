@@ -1,0 +1,68 @@
+.picpart{
+   
+    background-image: url("../storage/images/BFAM-Bible-Club-img.png");
+    height: 100vh;
+ position: relative;
+}
+
+body{
+    background-color: black;
+    font-family: Poppins;
+}
+.sign1{
+    height: 100vh;
+   
+
+}
+.pic{
+    
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 5%;
+  
+
+}
+.cont{
+    margin-left: 10%;
+    margin-right: 5%;
+}
+.compt{
+    width: 100%;
+    height: 100%;
+}
+@media (max-width: 990px){
+    .picpart{
+        display:none;
+    }
+    .cont{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+}
+
+.s1{margin-top:10%; margin-left: 5%;}
+.s2{width:40%;}
+.s3{margin-top:5%;margin-left: 5%;}
+.s4{color: grey; font-size: 250%;}
+.s5{margin-top:5%;margin-left: 5%;}
+.s6{width: 95%;}
+.s7{margin-top:5%;margin-left: 5%;}
+.s8{width: 95%;}
+.s9{margin-top:2%;margin-left: 6%;}
+.s10{color:blue;}
+.s11{margin-top:2%;margin-left: 5%;}
+.s12{float: right; }
+.s13{text-decoration: none;color: #0D34B2;}
+.fields{
+    height: 120%;
+   border-radius: 15px;
+   border-color: blue;
+
+
+}
+.btn-primary{
+    width: 100%;
+    background-color: #0D34B2; 
+    border-radius: 7.5px;
+}

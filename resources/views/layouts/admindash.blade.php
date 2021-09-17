@@ -273,7 +273,24 @@
     text-decoration: none;
     transition: all 0.4s;
   }
-  
+  .choosef{
+	margin-top: 5%;
+	border-style:dashed  ;
+
+	border-width: 1px;
+	border-radius: 30px;
+	height: 150px;
+	border-color: blue;
+	width: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 15%;
+	color: grey;
+	
+
+}
+.t8{display: none;}
   
   #sidebar {
     min-width: 250px;
@@ -288,6 +305,10 @@
   #sidebar.active {
     margin-left: -250px;
   }
+  div.some-class {
+    display: inline-block;
+    width: 50%;
+}
   
   #sidebar .sidebar-header {
     padding: 20px;
@@ -405,11 +426,11 @@
                     <div class="col-md-12 ">
             <div class="list-container text-white p-4">
               <ul class="mt-1 wrap">
-              <a class="aref" href="home"> <li> 
+              <a class="aref" href="admin"> <li> 
                      
                      Dashboard 
                 </li></a>
-                <a class="aref" href="course"><li>   
+                <a class="aref" href="courses"><li>   
                     
                     Courses
 </li></a>
@@ -417,8 +438,8 @@
 
                     <a class="aref" href=""><li>          
                   Settings</li></a>
-                  
-                  
+                  <a class="aref" href="upload"><li>          
+                  Create</li></a>
               </ul>
             </div>
           </div>
