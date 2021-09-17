@@ -27,6 +27,9 @@
                 </label>
               </div>
                           </div>
+                          <div>
+                              <a href="{{ route('register') }}">Register</a>
+                          </div>
                           <div class="row s11" >
                             <div class="col-lg-6">
                               <div class="col-xs-1 text-center" > 
