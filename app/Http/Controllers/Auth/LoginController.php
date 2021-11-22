@@ -48,24 +48,22 @@ protected $redirectTo = RouteServiceProvider::HOME;
         // Check Condition Mobile No. Found or Not
         if($request->get('phone') != $user['phone']) {
    
-            return back();
+            return back()->with('status',"Invalid Phone Number");
         }        
         if($request->get('email') != $user['email']) {
    
-            return back();
+            return back()->with('status',"Invalid Details");
         }       
     if ($user){
         Auth::login($user, true);
-       $vars= StudentCourse::where('user_id', Auth::user()->id)->pluck('course_id')->toArray();
-       
-       $select = DB::select('select * from CourseTable where id in ('.implode(", ",$vars).')');
+      
     
         if(Auth::user()->usertype=='Administrator')
-        {return  redirect('admin')->with('name', $select);
+        {return  redirect('admin');
         }
         else
         {
-            return redirect('home')->with('name', $select);;
+            return redirect('home');
         }
         
         

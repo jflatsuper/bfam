@@ -56,7 +56,7 @@ class RegisterController extends Controller
 
 
 
-            'country'=>['required','string'],
+            'country'=>['required','string','unique:users'],
 
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
            

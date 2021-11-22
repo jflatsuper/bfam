@@ -8,17 +8,23 @@ use App\Models\Course;
 use App\Models\StudentCourse;
 use Auth;
 
-class videocontroller extends Controller
+
+class videoController extends Controller
 {
     //
+   
     public function show(Request $request){
-        $name = $request->get('videolinks');
+        $name = $request->id;
+      
         $user = Auth::user()->id;
-$course= Course::where('videolinks','=',$name)->value('id');
+$course= Course::where('id','=',$name);
 
-$values = array('course_id' => $course,'user_id' => $user);
+$values = array('course_id' => $name,'user_id' => $user);
+$value2=Course::where('id','=',$name)->value('filetype');
 StudentCourse::firstOrCreate(
 $values, $values);
+$value3=DB::select('select * from comments where course_id in (?)',[$name]);
+
 
 
 
@@ -26,6 +32,8 @@ $values, $values);
 
         
         
-        return view('videoplayer')->with(['name' => $name,'c'=>$course,'us'=>$user]);
+        return view('videoplayer')->with(['c' => $name,'name'=>$course,'us'=>$user,'filetype'=>$value2,'comments'=>$value3]);
     }
+   
 }
+

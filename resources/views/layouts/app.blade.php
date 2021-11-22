@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
    
    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,6 +22,18 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  
+     
+      
+
+      <script type="text/javascript">
+       $(document).ready(function(){
+  $("#sidebarCollapse").click(function(){
+    $("#sidebar").toggleClass('active');
+    $("#content").toggleClass('active');
+  });
+});
+    </script>
     <style>
     body{
   font-family: Poppins!important;
@@ -125,7 +138,7 @@
       height:60vh;
       
   }
-   .meactive{color:white}
+   .meactive{color: #0D34B2}
   #passchange form{display:none;}
   
   
@@ -136,7 +149,9 @@
     height: 120%;
   }
 
-  
+  #sidebarCollapse{
+    display: none;
+  }
   input{
     height: 120%;
     border-radius: 20px!important;
@@ -267,13 +282,32 @@
     transition: all 0.4s;
   }
   
-  /* Side Bar */
-  .wrapper {
+ /* Side Bar */
+ .wrapper {
     display: flex;
     text-decoration: none;
     transition: all 0.4s;
   }
-  
+    
+    
+  .choosef{
+	margin-top: 5%;
+	border-style:dashed  ;
+
+	border-width: 1px;
+	border-radius: 30px;
+	height: 150px;
+	border-color: blue;
+	width: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 15%;
+	color: grey;
+	
+
+}
+.t8{display: none;}
   
   #sidebar {
     min-width: 250px;
@@ -288,6 +322,10 @@
   #sidebar.active {
     margin-left: -250px;
   }
+  div.some-class {
+    display: inline-block;
+    width: 50%;
+}
   
   #sidebar .sidebar-header {
     padding: 20px;
@@ -309,6 +347,7 @@
    
     
   }
+ 
   #content.active{
     width: 92%;
 
@@ -363,9 +402,12 @@
     #sidebar.active {
       margin-left: 0;
     }
+    #sidebarCollapse{
+    display: block;
+  }
    
     #content.active{
-      width: 96%;
+      width: 100%;
     }
     .f53{
       display: none;
@@ -388,7 +430,7 @@
                           <div  class="flex-container" style="height:150px;width:150px;border-radius:50%;background-color:black;margin-left:50px;margin-top:5%; overflow: hidden;vertical-align:middle;text-align: center;
   position: relative;display: inline-block;"> 
                       <a class="goback" href="">
-                            <img src class="trans2"/>
+                            <img src="{{Auth::user()->profphoto}}" class="trans2"/>
                           </a>
                           </div>
                            
@@ -415,10 +457,9 @@
 </li></a>
 
 
-                    <a class="aref" href=""><li>          
+                    <a class="aref" href="setting"><li>          
                   Settings</li></a>
-                  
-                  
+                
               </ul>
             </div>
           </div>
@@ -427,10 +468,17 @@
 </form>
            
   </nav>
-  <div id="content">
+  <div id="content" style="overflow-y: scroll;">
 
 
 <div class=" f2" >
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <button type="button" id="sidebarCollapse" class="btn btn-dark">
+      <span class="iconify" data-icon="akar-icons:chevron-left"></span>
+      </button>
+    </div>
+  </nav>
 
 
     <h2 class="f1"> Welcome, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}  <img class ="x2" src="../storage/images/BFAM-Bible-Club.png"></h2>

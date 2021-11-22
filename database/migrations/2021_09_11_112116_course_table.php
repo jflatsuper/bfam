@@ -20,6 +20,7 @@ class CourseTable extends Migration
             $table->string('Description');
             $table->string('Comments');
             $table->string('videolinks');
+            $table->string('filetype');
             
             $table->string('CourseCreator');
             $table->timestamps();

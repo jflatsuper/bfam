@@ -19,7 +19,9 @@ class createController extends Controller
         $rules = [
 			'CourseTitle' => 'required|string|min:3|max:255',
 			'Description' => 'required|string|min:3',
-            'Comments' => 'required|string|max:255',
+			'Comments' => 'required|string|max:255',
+			'Thumbnail' => "dimensions:max_width=300,max_height=200",
+
             
 		];
 		$validator = Validator::make($request->all(),$rules);
@@ -35,18 +37,26 @@ class createController extends Controller
                 $table->CourseTitle = $data['CourseTitle'];
                 $table->Description = $data['Description'];
 				$table->Comments= $data['Comments'];
-               
-                $table->CourseCreator= Auth::user()->first_name.' '.Auth::user()->last_name;
+				$imglink=cloudinary()->upload($request->file('Thumbnail')->getRealPath())->getSecurePath();
+				$table->imglink=$imglink;
+               if($request->file('videolinks')){
 				$uploadedFileUrl = cloudinary()->uploadVideo($request->file('videolinks')->getRealPath())->getSecurePath();
 				$newfilename=substr($uploadedFileUrl, 0 , (strrpos($uploadedFileUrl, ".")));
-                $table->videolinks = $newfilename;
+				$table->videolinks = $newfilename;
+				$type=substr($uploadedFileUrl, strrpos($uploadedFileUrl, ".") + 1); 
+				$table->filetype=$type;
+
+			   }
+                $table->CourseCreator= Auth::user()->first_name.' '.Auth::user()->last_name;
+				
+				
       
 
 				$table->save();
-				return redirect('upload')->with('status',"Insert successfully");
+				return redirect('upload')->with('status',"Course Successfully created");
 			}
 			catch(Exception $e){
-				return redirect('upload')->with('failed',"operation failed");
+				return redirect('upload')->with('failed',"Unable to create course at this point");
 			}
 		}
     }

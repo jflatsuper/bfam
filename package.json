@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "cloudinary-core": "^2.11.4",
-        "cloudinary-video-player": "^1.5.5"
+        "cloudinary-video-player": "^1.5.5",
+        "tinymce": "^5.9.2"
     }
 }

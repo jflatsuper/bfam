@@ -1,12 +1,13 @@
 .picpart{
    
     background-image: url("../storage/images/BFAM-Bible-Club-img.png");
+    background-repeat: no-repeat;
     height: 100vh;
  position: relative;
 }
 
 body{
-    background-color: black;
+  
     font-family: Poppins;
 }
 .sign1{
@@ -18,7 +19,7 @@ body{
     
     text-align: center;
     margin-top: 10%;
-    margin-left: 5%;
+    margin-left: 7%;
   
 
 }
@@ -38,26 +39,44 @@ body{
         margin-left: 5%;
         margin-right: 5%;
     }
+   .r7{
+       margin-bottom: 5%;
+   }
     
 }
 
 .s1{margin-top:10%; margin-left: 5%;}
 .s2{width:40%;}
 .s3{margin-top:5%;margin-left: 5%;}
-.s4{color: grey; font-size: 250%;}
+.sq{margin-top:5%;
+    margin-left: 7%;
+   
+}
+.sx{
+    margin-top:5%;margin-left: 7%;
+}
+.s4{color: grey; font-size: 200%;}
 .s5{margin-top:5%;margin-left: 5%;}
-.s6{width: 95%;}
+.s6{width: 100%;}
 .s7{margin-top:5%;margin-left: 5%;}
 .s8{width: 95%;}
-.s9{margin-top:2%;margin-left: 6%;}
-.s10{color:blue;}
+.s9{margin-top:5%;margin-left: 7%;}
+.s10{color: #0D34B2; text-decoration: underline;}
 .s11{margin-top:2%;margin-left: 5%;}
-.s12{float: right; }
+.s12{float: right; color:#0D34B2; }
+.s12 a{
+    color:#0D34B2;
+}
+.s19{
+    margin-top:5%;margin-left: 5%;
+   
+}
 .s13{text-decoration: none;color: #0D34B2;}
+
 .fields{
-    height: 120%;
+    height: 50px;
    border-radius: 15px;
-   border-color: blue;
+   border-color: green;
 
 
 }
