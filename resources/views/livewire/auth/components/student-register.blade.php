@@ -319,7 +319,7 @@
 
     <div class="row sq" >
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="1" wire:model.lazy="terms" id="flexCheckChecked" >
+            <input class="form-check-input" type="checkbox" wire:model="terms" >
             <label class="form-check-label s10" for="flexCheckChecked">
                 <a href="#"> Accept terms of use</a>
             </label>

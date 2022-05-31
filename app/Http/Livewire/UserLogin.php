@@ -43,8 +43,10 @@ class UserLogin extends Component
         if ($user->hasRole('admin')){
             return redirect(route('admin.dashboard'));
         }
+        if ($user->hasRole('student')){
+            return redirect(route('student.dashboard'));
+        }
         return $this->emit('alert', ['type' => 'success', 'message' => 'Logged successfully']);
-
 
     }
 

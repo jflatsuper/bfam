@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\StudentProfile;
 use App\Models\User;
 use Livewire\Component;
 
@@ -44,6 +45,10 @@ class StudentRegister extends Component
            'country'        => $this->country,
            'phone'          => $this->phone
         ]);
+
+      StudentProfile::create([
+        'user_id'   => $user->id
+      ]);
 
         $user->attachRole('student');
         $this->reset();

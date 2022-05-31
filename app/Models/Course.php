@@ -28,4 +28,8 @@ class Course extends Model
         return asset("uploads/images/$this->cover_image");
     }
 
+    public function enrolled(){
+        return $this->hasMany(StudentRegisteredCourses::class, 'course_id');
+    }
+
 }

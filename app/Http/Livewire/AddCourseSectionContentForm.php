@@ -28,7 +28,7 @@ class AddCourseSectionContentForm extends Component
         $this->validateOnly($field,[
             'title'         => 'required|string|max:255',
             'sort'          => 'required|numeric|min:1',
-            'video'         => 'required|file|mimes:mp4,max:30720',
+            'video'         => 'nullable|file|mimes:mp4,max:30720',
             'material'      => 'nullable|file|mimes:pdf, zip'
         ]);
     }
@@ -37,7 +37,7 @@ class AddCourseSectionContentForm extends Component
         $this->validate([
             'title'         => 'required|string|max:255',
             'sort'          => 'required|numeric|min:1',
-            'video'         => 'required|file|mimes:mp4, max:30720',
+            'video'         => 'nullable|file|mimes:mp4, max:30720',
             'material'      => 'nullable|file|mimes:pdf, zip'
         ]);
 
@@ -45,18 +45,21 @@ class AddCourseSectionContentForm extends Component
             return $this->emit('alert', ['type' => 'error', 'message' => 'The sorting number exists']);
         }
 
-        $video = $this->video->store('/', 'videos');
+       if ($this->video){
+           $this->video = $this->video->store('/', 'videos');
+       }
+
         $material = null;
         if ($this->material){
-            $material = $this->material->store('/', 'materials');
+            $this->material = $this->material->store('/', 'materials');
         }
 
         CourseSectionVideos::create([
             'course_section_id'      => $this->section->id,
             'title'                  => $this->title,
             'sort'                   => $this->sort,
-            'video'                  => $video,
-            'material'               => $material
+            'video'                  => $this->video,
+            'material'               => $this->material
         ]);
 
         $this->resetExcept(['section']);

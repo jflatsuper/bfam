@@ -34,11 +34,13 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="_215b10">
-                                    <a href="#" class="_215b11">
-                                        <span><i class="uil uil-heart"></i></span> Sponsored by loveworld
-                                    </a>
+                                <div class="_215b10 mt-4">
 
+                                    <a href="{{route('admin.course-full-details', $course->id)}}">
+                                        <button class="btn_adcart">
+                                            Course details
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-xl-8 col-lg-7 col-md-6">
@@ -47,7 +49,7 @@
                                     <span class="_215b04">{{Str::limit($course->description, 100, $end='...')}}</span>
                                 </div>
                                 <div class="_215b05">
-                                    114,521 students enrolled
+                                    {{count($course->enrolled)}} student(s) enrolled
                                 </div>
                                 <div class="_215b05">
                                     Last updated {{$course->created_at->diffForHumans()}}
@@ -74,7 +76,7 @@
                                 <div class="_215fgt1">
                                     Free for all candidate
                                 </div>
-                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>

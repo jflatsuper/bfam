@@ -20,23 +20,6 @@
                         <span class="menu--label">Courses</span>
                     </a>
                 </li>
-                @if(count($categories) > 0)
-                <li class="menu--item menu--item__has_sub_menu">
-                    <label class="menu--link" title="Categories">
-                        <i class='uil uil-layers menu--icon'></i>
-                        <span class="menu--label">Category courses</span>
-                    </label>
-                    <ul class="sub_menu">
-
-                        @foreach($categories as $category)
-                        <li class="sub_menu--item">
-                            <a href="{{route('admin.category-courses', $category->name)}}" class="sub_menu--link">{{$category->name}}</a>
-                        </li>
-                        @endforeach
-
-                    </ul>
-                </li>
-                @endif
                 <li class="menu--item">
                     <a href="{{route('admin.students')}}" class="menu--link @if(Route::currentRouteName() == 'admin.students') active @endif" title="Saved Courses">
                         <i class="uil uil-users-alt menu--icon"></i>

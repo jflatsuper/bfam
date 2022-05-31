@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Category;
 use Illuminate\View\Component;
 
 class StudentVerticalNav extends Component
@@ -11,9 +12,10 @@ class StudentVerticalNav extends Component
      *
      * @return void
      */
+    public $categories;
     public function __construct()
     {
-        //
+        $this->categories = Category::all();
     }
 
     /**
@@ -23,6 +25,6 @@ class StudentVerticalNav extends Component
      */
     public function render()
     {
-        return view('components.student-vertical-nav');
+        return view('components.student-vertical-nav', ['categories' => $this->categories]);
     }
 }

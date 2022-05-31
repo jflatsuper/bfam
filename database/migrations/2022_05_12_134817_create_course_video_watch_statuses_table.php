@@ -16,6 +16,7 @@ class CreateCourseVideoWatchStatusesTable extends Migration
         Schema::create('course_video_watch_statuses', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('course_section_video_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->boolean('watched')->default(false);
             $table->timestamps();
         });

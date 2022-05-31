@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminViewController;
+use App\Http\Controllers\StudentViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
         Route::get('/create-course-category',                               [AdminViewController::class, 'createCourse'])->name('create-course-category');
         Route::get('/create-course-sections/{course_id}',                   [AdminViewController::class, 'addSections'])->name('add-course-section');
         Route::get('/create-course-section-content/{section_id}',           [AdminViewController::class, 'addSectionContents'])->name('add-course-section-content');
-
+        Route::get('/course-full-details/{course_id}',                       [AdminViewController::class, 'fullCourseDetails'])->name('course-full-details');
 
         Route::get('/courses',                                               [AdminViewController::class, 'courses'])->name('courses');
         Route::get('/course-details/{course_id}',                            [AdminViewController::class, 'courseDetails'])->name('course-details');

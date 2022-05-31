@@ -68,4 +68,9 @@ class AdminViewController extends Controller
         $course = Course::find($course_id);
         return view('livewire.admin.pages.admin-course-details-page', ['course' => $course]);
     }
+
+    public function fullCourseDetails($course_id){
+        $course = Course::find($course_id);
+        return view('livewire.admin.pages.admin-full-course-details-page', ['course' => $course]);
+    }
 }

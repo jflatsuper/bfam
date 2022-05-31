@@ -2,6 +2,11 @@
     <div class="tab-from-content">
         <div class="title-icon">
             <h3 class="title"><i class="uil uil-info-circle"></i>{{$section->title}} | Sort: {{$section->sort}}</h3>
+            <a href="{{route('admin.course-details', $section->course->id)}}">
+                <button class="btn_adcart">
+                    View details
+                </button>
+            </a>
         </div>
         <form wire:submit.prevent="addContent">
             <div class="course__form">

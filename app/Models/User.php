@@ -48,4 +48,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function student(){
+        return $this->hasOne(StudentProfile::class, 'user_id');
+    }
+
+    public function getUserImageAttribute(){
+        if ($this->profile_photo_path){
+            return asset("uploads/images/$this->profile_photo_path");
+        }else{
+            return asset('images/hd_dp.jpg');
+        }
+    }
+
 }
