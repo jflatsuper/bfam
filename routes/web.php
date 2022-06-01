@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth','isAdmin'])->group (function(){
     Route::get('/courses','App\Http\Controllers\admincoursecontrol@index');
     Route::get('upload','App\Http\Controllers\createController@insert');
-Route::post('upload','App\Http\Controllers\createController@create');
+    Route::post('upload','App\Http\Controllers\createController@create');
 
 
 
@@ -45,7 +46,7 @@ Route::post('changedetails','App\Http\Controllers\adsettingsController@show5')->
 Route::post('changepic','App\Http\Controllers\adsettingsController@show6')->name('changepic');
 Route::get('delete','App\Http\Controllers\admincoursecontrol@delete')->name('delete');
 
-    
+
     Route::get('/admin',
     [App\Http\Controllers\admincontroller::class, 'index']) ->name('admin');
 });

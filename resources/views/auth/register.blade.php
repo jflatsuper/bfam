@@ -1,14 +1,14 @@
 @extends('layouts.signpages')
 
 @section('content')
-<link  rel="stylesheet"  type="text/css" href="{{ url('css/app.css') }}">
-    
-           
+<link  rel="stylesheet"  type="text/css" href="{{ asset('css/app.css') }}">
+
+
 <div class="row sq" >
     <h class="s4">Create your account</h>
   </div>
 
-            
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="row row-eq-height s3" >
@@ -20,10 +20,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-        
+
                             </div>
                             <div class="col-lg-5 r9"  >
-                             
+
                               <input id="last_name" placeholder="Last name" type="text" class="form-control fields r10 @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
 
                               @error('last_name')
@@ -35,7 +35,7 @@
                           </div>
                           <div class="row row-eq-height s3" >
                             <div class="col-lg-11">
-                              
+
                               <input id="email" placeholder="Email" type="email" class="form-control fields r10 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                               @error('email')
@@ -45,11 +45,11 @@
                               @enderror
                             </div>
                           </div>
-                         
+
                           <div class="row row-eq-height s3" >
                             <div class="col-lg-11">
-                           
-                             
+
+
                               <select id="country" name="country" placeholder="Country" class="form-control fields r10" @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country" autofocus>
                                 <option value="Country" selected disabled>Country</option>
                                 <option value="Afganistan">Afghanistan</option>
@@ -308,12 +308,12 @@
                             </div>
                           </div>
 
-                        
-         
+
+
 
                           <div class="row row-eq-height  s3" >
                             <div class="col-lg-11">
-                            
+
                               <input id="phone" placeholder="Phone" type="text" class="form-control fields r10 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
                               @error('phone')
@@ -323,10 +323,10 @@
                               @enderror
                             </div>
                           </div>
-                        
 
-                      
-                      
+
+
+
 
                           <div class="row sq" >
                           <div class="form-check  ">
@@ -336,10 +336,10 @@
                             </label>
                           </div>
                           </div>
-                         
+
                           <div class="row s11" >
                             <div class="col-lg-6">
-                              <div class="col-xs-1 text-center" > 
+                              <div class="col-xs-1 text-center" >
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
@@ -349,9 +349,9 @@
                                 <h5 class="s12" ><a href="{{ route('login') }}">or Sign in</a></h5>
                               </div>
                           </div>
-    
+
                     </form>
                 </div>
-          
-  
+
+
 @endsection

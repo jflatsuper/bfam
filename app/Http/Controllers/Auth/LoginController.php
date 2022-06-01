@@ -25,11 +25,11 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
-    
+
+
 use AuthenticatesUsers;
-   
-   
+
+
 protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -37,27 +37,27 @@ protected $redirectTo = RouteServiceProvider::HOME;
      *
      * @var string
      */
-    
+
 
     public function login(Request $request)
     {
-        
-    
+
+
         $user = User::where('phone', $request->get('phone'))->first();
-    
+
         // Check Condition Mobile No. Found or Not
         if($request->get('phone') != $user['phone']) {
-   
+
             return back()->with('status',"Invalid Phone Number");
-        }        
+        }
         if($request->get('email') != $user['email']) {
-   
+
             return back()->with('status',"Invalid Details");
-        }       
+        }
     if ($user){
         Auth::login($user, true);
-      
-    
+
+
         if(Auth::user()->usertype=='Administrator')
         {return  redirect('admin');
         }
@@ -65,16 +65,12 @@ protected $redirectTo = RouteServiceProvider::HOME;
         {
             return redirect('home');
         }
-        
-        
+
+
     }
     else{
         return redirect()->back();
     }
-        
-       
-     
-    
 
     }
     protected function redirectTo(){
@@ -96,5 +92,5 @@ protected $redirectTo = RouteServiceProvider::HOME;
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
 }
