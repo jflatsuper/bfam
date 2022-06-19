@@ -20,12 +20,6 @@
                         <span class="menu--label">My courses</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="{{route('student.exam')}}" class="menu--link @if(Route::currentRouteName() == 'student.exam') active @endif" title="Explore">
-                        <i class='uil uil-book-alt menu--icon'></i>
-                        <span class="menu--label">Certification</span>
-                    </a>
-                </li>
             </ul>
         </div>
 

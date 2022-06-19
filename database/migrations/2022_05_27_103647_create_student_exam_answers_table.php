@@ -15,10 +15,10 @@ class CreateStudentExamAnswersTable extends Migration
     {
         Schema::create('student_exam_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('question');
+            $table->bigInteger('user_id');
+            $table->bigInteger('course_id');
+            $table->bigInteger('question_id');
             $table->string('answer');
-            $table->string('exam_id'); // Random digit that identifies this particular exam
             $table->timestamps();
         });
     }

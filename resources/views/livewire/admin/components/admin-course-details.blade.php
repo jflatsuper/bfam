@@ -41,6 +41,11 @@
                                             Course details
                                         </button>
                                     </a>
+                                    <a href="{{route('admin.exam', $course->id)}}">
+                                        <button class="btn_adcart">
+                                            Set Exam
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-xl-8 col-lg-7 col-md-6">
@@ -49,7 +54,19 @@
                                     <span class="_215b04">{{Str::limit($course->description, 100, $end='...')}}</span>
                                 </div>
                                 <div class="_215b05">
-                                    {{count($course->enrolled)}} student(s) enrolled
+                                    @if(count($course->enrolled) < 2)
+                                        <a href="{{route('admin.course-students', $course->id)}}">
+                                            {{count($course->enrolled)}} student enrolled
+                                        </a>
+
+                                    @else
+                                        <a href="{{route('admin.course-students', $course->id)}}">
+                                            {{count($course->enrolled)}} students enrolled
+                                        </a>
+                                    @endif
+
+
+
                                 </div>
                                 <div class="_215b05">
                                     Last updated {{$course->created_at->diffForHumans()}}
@@ -59,7 +76,7 @@
                                                 Update course
                                             </button></a></li>
                                     <li><a href="{{route('admin.add-course-section', $course->id)}}"><button class="btn_adcart">
-                                                Add section
+                                                Add module
                                             </button></a></li>
                                     <li>
                                         <button class="btn_buy" wire:loading wire:target="removeCourse({{$course->id}})">
@@ -166,7 +183,7 @@
                                                                         <div class="title">
                                                                             {{$content->title}}
                                                                             @if($content->material)
-                                                                             <a target="_blank" href="{{$content->VideoMaterial}}"><span class="fa fa-file-archive"></span> Material</a>
+                                                                             <a target="_blank" href="{{$content->VideoMaterial}}" style="margin-left: 40px;"><span class="fa fa-file-archive"></span> View document</a>
                                                                             @endif
                                                                         </div>
 
@@ -194,10 +211,6 @@
 
                                 </div>
                             </div>
-
-
-
-
 
                         </div>
                     </div>

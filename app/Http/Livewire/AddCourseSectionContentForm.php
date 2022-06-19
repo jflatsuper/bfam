@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\CourseSectionVideos;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -28,7 +29,7 @@ class AddCourseSectionContentForm extends Component
         $this->validateOnly($field,[
             'title'         => 'required|string|max:255',
             'sort'          => 'required|numeric|min:1',
-            'video'         => 'nullable|file|mimes:mp4,max:30720',
+            'video'         => 'nullable|file|mimes:mp4,max:100000',
             'material'      => 'nullable|file|mimes:pdf, zip'
         ]);
     }
@@ -37,7 +38,7 @@ class AddCourseSectionContentForm extends Component
         $this->validate([
             'title'         => 'required|string|max:255',
             'sort'          => 'required|numeric|min:1',
-            'video'         => 'nullable|file|mimes:mp4, max:30720',
+            'video'         => 'nullable|file|mimes:mp4, max:100000',
             'material'      => 'nullable|file|mimes:pdf, zip'
         ]);
 
@@ -46,6 +47,8 @@ class AddCourseSectionContentForm extends Component
         }
 
        if ($this->video){
+           $uploadedFileUrl = Cloudinary::uploadVideo($this->video->getRealPath())->getSecurePath();
+           dd($uploadedFileUrl);
            $this->video = $this->video->store('/', 'videos');
        }
 

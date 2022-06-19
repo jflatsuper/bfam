@@ -16,9 +16,15 @@ class AdminFullCourseDetails extends Component
     public $comments = [];
     public $comment;
 
+    public $viewPDF;
+
     protected $listeners = [
         'refreshAdminCourseDetails' => 'fetchCourse'
     ];
+
+    public function openPDFView(){
+        $this->viewPDF = true;
+    }
 
     public function mount($course){
         $this->course = $course;
@@ -39,7 +45,13 @@ class AdminFullCourseDetails extends Component
         LastPlayedContent::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->update([
             'last_content'  => $content_id
         ]);
+
         $this->currentContent = $content;
+        if ($content->video){
+            $this->viewPDF = false;
+        }elseif(!$content->video && $content->material){
+            $this->openPDFView();
+        }
     }
 
     public function fetchCourse(){

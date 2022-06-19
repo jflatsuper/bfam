@@ -69,7 +69,7 @@
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                         <button type="submit"  wire:loading.remove wire:target="updateCourse" class="btn btn-primary">
-                            UPDATE COURSE
+                           NEXT >>
                         </button>
                         <a class="btn btn-outline-secondary" href="{{route('admin.course-details', $course->id)}}"><< Go back to course</a>
                     </div>

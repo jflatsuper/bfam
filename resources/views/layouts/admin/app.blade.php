@@ -42,22 +42,8 @@
         <span class="collapse_menu--label"></span>
     </button>
     <div class="main_logo" id="logo">
-        <a href="index-2.html"><img src="images/logo.svg" alt=""></a>
-        <a href="index-2.html"><img class="logo-inverse" src="images/ct_logo.svg" alt=""></a>
-    </div>
-    <div class="top-category">
-        <div class="ui compact menu cate-dpdwn">
-            <div class="ui simple dropdown item">
-                <a href="#" class="option_links p-0" title="categories"><i class="uil uil-apps"></i></a>
-                <div class="menu dropdown_category5">
-                    @if(count($categories) >0)
-                        @foreach($categories as $category)
-                            <a href="{{route('admin.category-courses', $category->name)}}" class="item channel_item">{{$category->name}}</a>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-        </div>
+        <a href="{{route('admin.dashboard')}}"><img style="max-width: 100%;"  src="{{asset('images/bfam.png')}}" alt=""></a>
+        <a href="{{route('admin.dashboard')}}"><img class="logo-inverse" style="max-width: 100%;" src="{{asset('images/bfam.png')}}" alt=""></a>
     </div>
     <div class="search120">
         <div class="ui search">

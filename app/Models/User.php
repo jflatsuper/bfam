@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasOne(StudentProfile::class, 'user_id');
     }
 
+    public function enrolled(){
+        return $this->hasMany(StudentRegisteredCourses::class, 'user_id');
+    }
+
     public function getUserImageAttribute(){
         if ($this->profile_photo_path){
             return asset("uploads/images/$this->profile_photo_path");
@@ -60,5 +64,7 @@ class User extends Authenticatable
             return asset('images/hd_dp.jpg');
         }
     }
+
+
 
 }

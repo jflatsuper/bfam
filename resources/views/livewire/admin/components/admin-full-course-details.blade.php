@@ -29,13 +29,22 @@
 
                             @if($currentContent)
                                 @if($currentContent !== 1)
-                                    <video controls autoplay style="max-width: 100%" src="{{$currentContent->VideoContent}}">
+                                    @if($viewPDF)
+                                        <iframe id="fred" style="border:1px solid #666CCC" title="PDF in an i-Frame" src="{{$currentContent->VideoMaterial}}" frameborder="1" scrolling="auto" height="1100" width="850" ></iframe>
+                                    @else
+                                        @if($currentContent->video)
+                                            <video controls autoplay style="max-width: 100%" src="{{$currentContent->VideoContent}}">
 
-                                    </video>
+                                            </video>
+                                        @else
+                                            <img width="100%" src="{{asset('images/courses/add_video.jpg')}}" alt="">
+                                        @endif
+                                    @endif
                                 @else
                                     <img width="100%" src="{{asset('images/courses/add_video.jpg')}}" alt="">
                                 @endif
                             @endif
+
                         </div>
                         <div class="user_dt5">
                             <div class="user_dt_left">
@@ -61,6 +70,15 @@
                                 <button class="btn_adcart">
                                     Back to course settings
                                 </button>
+                                @if($currentContent)
+                                    @if($currentContent !== 1)
+                                        @if($currentContent->material)
+                                            <a class="btn btn-outline-primary" href="#"  wire:click="openPDFView" style="margin-left: 40px;"><span class="fa fa-file-archive"></span> View attached document</a>
+                                        @endif
+                                    @else
+                                    @endif
+                                @endif
+
                             </a>
                         </div>
 
@@ -90,14 +108,16 @@
                                                     <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
                                                         <div class="section-header-left">
                                                     <span class="section-title-wrapper">
-                                                    <i class='uil uil-presentation-play crse_icon'></i>
-                                                    <span class="section-title-text">{{$section->sort}}. {{$section->title}}</span>
+                                                    <span class="section-title-text" style="font-size: 70%">{{$section->sort}}. {{$section->title}}</span>
                                                     </span>
                                                         </div>
                                                         <div class="section-header-right">
 
-                                                            <span class="num-items-in-section">{{count($section->contents)}} lectures</span>
-                                                            <span class="section-header-length">{{$section->updated_at->diffForHumans()}}</span>
+                                                            @if(count($section->contents) > 1)
+                                                            <span class="num-items-in-section">{{count($section->contents)}} contents</span>
+                                                            @else
+                                                                <span class="num-items-in-section">{{count($section->contents)}} content</span>
+                                                            @endif
                                                         </div>
                                                     </a>
                                                     <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
@@ -105,21 +125,14 @@
                                                             @foreach($section->contents as $content)
                                                                 <div class="lecture-container">
                                                                     <div class="left-content">
-                                                                        <i class='uil uil-file icon_142'></i>
                                                                         <div class="top">
                                                                             <div class="title">
-                                                                                <span style="cursor: pointer" wire:click="select({{$content->id}})">{{$content->title}}</span>
-                                                                                @if($content->material)
-                                                                                    <a target="_blank" href="{{$content->VideoMaterial}}"><span class="fa fa-file-archive"></span> Material</a>
-                                                                                @endif
+                                                                                <span style="cursor: pointer; font-size: 100%" wire:click="select({{$content->id}})">{{$content->title}}</span>
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
                                                                     <div class="details">
                                                                         <span style="cursor:pointer; margin-right: 50px" >{{$content->sort}}</span>
-
-                                                                        <span class="content-summary">{{$content->created_at->diffForHumans()}}</span>
                                                                     </div>
                                                                 </div>
                                                             @endforeach

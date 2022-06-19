@@ -11,7 +11,7 @@ class CourseSectionVideos extends Model
     protected $guarded = [];
 
     public function getVideoContentAttribute(){
-        return asset("uploads/videos/$this->video");
+        return $this->video;
     }
 
     public function getVideoMaterialAttribute(){

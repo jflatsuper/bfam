@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Course;
+use App\Models\ExamCompletedStatus;
 use App\Models\LastPlayedContent;
 use App\Models\StudentRegisteredCourses;
 use Illuminate\Support\Facades\Auth;
@@ -33,10 +34,17 @@ class StudentCoursePreview extends Component
     public function enroll($course_id){
         // Check if enrolment is active already
         if (!StudentRegisteredCourses::where('user_id', Auth::user()->id)->where('course_id', $course_id)->first()){
+            $student = \App\Models\StudentProfile::where('user_id', Auth::user()->id)->first();
             StudentRegisteredCourses::create([
                 'user_id'       => Auth::user()->id,
                 'course_id'     => $course_id,
-                'student_id'    => Auth::user()->student->id
+                'student_id'    => $student->id
+            ]);
+
+            ExamCompletedStatus::create([
+                'user_id'       => Auth::user()->id,
+                'course_id'     => $course_id,
+                'status'        => false
             ]);
 
             $firstContent = null;

@@ -1,13 +1,20 @@
-
 @component('mail::message')
-    # Hello {{$user->name}}
+<h2 style="text-align: center">Welcome to BFAM Club! 🎉🙏</h2>
 
-    Thank you for creating an account, Please verify your email using the link:
+<p><b>Hi, {{ $user->first_name  }}</b></p>
 
-    @component('mail::button', ['url' => route('verify', $user->verification_token)])
-        Verify Account
-    @endcomponent
+<p>We are honoured that you would choose to study the Bible with BFAM Bible club.</p>
+<p>To get started, please login to your portal and start taking a course now. </p>
 
-    Thanks,<br>
-    {{ config('app.name') }}
+
+@component('mail::button', ['url' => route('login')])
+        Login now
+@endcomponent
+
+<p>We look forward to getting to know you better. Thank you again for studying the Bible with us.</p>
+
+<small>Please do respond to this email. If you are having technical difficulties.</small>
+
+Thanks,<br>
+{{ 'BFAM Bible Club' }}
 @endcomponent

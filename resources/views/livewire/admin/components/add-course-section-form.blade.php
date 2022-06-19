@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="ui search focus mt-30 lbel25">
-                                <label>Section Title*</label>
+                                <label>Module Title*</label>
                                 <div class="ui left icon input swdh19">
                                     <input class="prompt srch_explore {{$errors->has('title')? 'is-invalid' : '' }}" wire:model.lazy="title" type="text" placeholder="Insert section title.">
                                 </div>
@@ -31,11 +31,14 @@
                     </div>
 
                     <div class="step-footer step-tab-pager">
+                        <a href="{{route('admin.edit-course', $course->id)}}" class="btn btn-primary">
+                            << PREVIOUS
+                        </a>
                         <button type="button" disabled wire:loading wire:target="addSection" class="btn btn-primary">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                         <button type="submit"  wire:loading.remove wire:target="addSection" class="btn btn-primary">
-                            ADD SECTION
+                            NEXT >>
                         </button>
                     </div>
                 </div>

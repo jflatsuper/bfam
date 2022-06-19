@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ExamCompletedStatus;
+use App\Models\ExamCurrentQuestion;
 use App\Models\ExamQuestion;
+use App\Models\ExamQuestionAnswer;
 use App\Models\StudentExamAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -11,63 +14,240 @@ use Livewire\Component;
 
 class StudentExam extends Component
 {
-    public $question_1;
-    public $question_2;
-    public $question_3;
-
+    public $answer;
     public $submitted;
     public $score;
 
+    public $course;
+    public $question;
+
+    public $isLast;
+    public $isFirst;
+    public $isCompleted;
+    public $status;
+
+    public $noExam;
+
+    public function mount($course){
+        $this->course = $course;
+        $this->fetchNextQuestion();
+    }
+
+    public function fetchNextQuestion(){
+        if(count($this->course->questions) > 0){
+            $current = ExamCurrentQuestion::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if ($current){
+                $this->question = ExamQuestion::find($current->question_id);
+                $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $this->question->id)->first();
+                if ($answer){
+                    $this->answer = $answer->answer;
+                }
+//                dd($answer);
+
+            }else{
+                $this->question = $this->course->questions->first();
+            }
+
+            $status =  ExamCompletedStatus::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if($status){
+                if ($status->status == true){
+                    $this->computeScore();
+                    $this->isCompleted = true;
+                    $this->computeScore();
+                }
+            }else{
+                ExamCompletedStatus::create([
+                    'user_id'   => Auth::user()->id,
+                    'course_id' => $this->course->id
+                ]);
+            }
+
+
+            $this->toggleButtons();
+        }else{
+            $this->noExam = true;
+        }
+    }
+
+    public function tryAgain(){
+        $this->question = $this->course->questions->first();
+
+        $status =  ExamCompletedStatus::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+        if($status){
+            if ($status->status == true){
+                $this->isCompleted = false;
+                $status->status = false;
+            }
+            $status->save();
+
+            $current = ExamCurrentQuestion::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if ($current){
+                $current->question_id   = $this->question->id;
+                $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $this->question->id)->first();
+                if($answer){
+                    $this->answer = $answer->answer;
+                }
+                $current->save();
+            }
+
+        }else{
+            ExamCompletedStatus::create([
+                'user_id'   => Auth::user()->id,
+                'course_id' => $this->course->id
+            ]);
+        }
+
+
+
+        return redirect(route('student.exam', $this->course->id));
+    }
+
     public function updated($field){
-        $this->validateOnly($field, [
-            'question_1'    => 'required',
-            'question_2'    => 'required',
-            'question_3'    => 'required',
+        $this->validate([
+            'answer'     => 'required'
         ]);
     }
 
     public function submitAnswer(){
         $this->validate([
-            'question_1'    => 'required',
-            'question_2'    => 'required',
-            'question_3'    => 'required',
+            'answer'     => 'required'
         ]);
 
-        // Process subittion
-        $exam_id = Str::random(10);
-        StudentExamAnswer::create([
-           'user_id'       => Auth::user()->id,
-           'question'      => 'question_1',
-           'answer'        => $this->question_1,
-           'exam_id'       => $exam_id
-        ]);
+        $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $this->question->id)->first();
+        if ($answer){
+            $answer->answer = $this->answer;
+            $answer->save();
+        }else{
+            StudentExamAnswer::create([
+                'user_id'        => Auth::user()->id,
+                'course_id'      => $this->course->id,
+                'question_id'    => $this->question->id,
+                'answer'         => $this->answer,
+            ]);
+        }
 
-        StudentExamAnswer::create([
-            'user_id'       => Auth::user()->id,
-            'question'      => 'question_2',
-            'answer'        => $this->question_2,
-            'exam_id'       => $exam_id,
-        ]);
 
-        StudentExamAnswer::create([
-            'user_id'       => Auth::user()->id,
-            'question'      => 'question_3',
-            'answer'        => $this->question_3,
-            'exam_id'       => $exam_id
-        ]);
+        // Check if it is the last question
+        if ($this->isLast){
+//            dd('sdf');
+            $status =  ExamCompletedStatus::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            $status->status = true;
+            $status->save();
+        }
 
-        $this->reset();
-        // Compute score
-        $this->submitted = true;
-        $this->computeScore($exam_id);
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Answers submitted']);
+        $this->emit('alert', ['type' => 'success', 'message' => 'Answers submitted']);
+
+        if ($this->isLast){
+            $this->computeScore();
+           return $this->isCompleted = true;
+        }
+        $this->answer = null;
+        return $this->next();
     }
 
-    public function computeScore($exam_id){
+
+
+    public function toggleButtons(){
+        if ($this->question->sort == $this->course->questions->first()->sort){
+            $this->isFirst = true;
+        }else{
+            $this->isFirst = false;
+        }
+
+        if ($this->question->sort == $this->course->questions->last()->sort){
+            $this->isLast = true;
+        }else{
+            $this->isLast = false;
+        }
+    }
+
+    public function toQuestion($sort)
+    {
+
+        $question = ExamQuestion::where('course_id', $this->course->id)->where('sort', $sort)->get()->first();
+
+            $current = ExamCurrentQuestion::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if($current){
+                $current->question_id   = $question->id;
+                $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $question->id)->first();
+                if($answer){
+                    $this->answer = $answer->answer;
+                }
+                $current->save();
+            }else{
+                ExamCurrentQuestion::create([
+                    'user_id'        => Auth::user()->id,
+                    'course_id'      => $this->course->id,
+                    'question_id'    => $question->id,
+                ]);
+            }
+
+        $this->question = $question;
+        $this->toggleButtons();
+
+    }
+
+    public function next()
+    {
+
+        $question = ExamQuestion::where('course_id', $this->course->id)->where('sort', $this->question->sort + 1)->get()->first();
+
+        if (!$this->isLast){
+            $current = ExamCurrentQuestion::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if($current){
+                $current->question_id   = $question->id;
+                $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $question->id)->first();
+                if($answer){
+                    $this->answer = $answer->answer;
+                }
+                $current->save();
+            }else{
+                ExamCurrentQuestion::create([
+                    'user_id'        => Auth::user()->id,
+                    'course_id'      => $this->course->id,
+                    'question_id'    => $question->id,
+                ]);
+            }
+        }
+
+
+        $this->question = $question;
+        $this->toggleButtons();
+
+    }
+
+    public function previous()
+    {
+        $question = ExamQuestion::where('course_id', $this->course->id)->where('sort', $this->question->sort - 1)->first();
+        if (!$this->isFirst){
+            $current = ExamCurrentQuestion::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+            if($current){
+                $current->question_id   = $question->id;
+                $answer = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->where('question_id', $question->id)->first();
+                if($answer){
+                    $this->answer = $answer->answer;
+                }
+                $current->save();
+            }else{
+                ExamCurrentQuestion::create([
+                    'user_id'        => Auth::user()->id,
+                    'course_id'      => $this->course->id,
+                    'question_id'    => $question->id,
+                ]);
+            }
+        }
+
+        $this->question = $question;
+        $this->toggleButtons();
+
+    }
+
+
+    public function computeScore(){
         $score  = 0;
-        $studentAnswers = StudentExamAnswer::where('exam_id', $exam_id)->get();
+        $studentAnswers = StudentExamAnswer::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->get();
         foreach ($studentAnswers as $studentAnswer){
-            $examQuestion = ExamQuestion::where('question', $studentAnswer->question)->first();
+            $examQuestion = ExamQuestion::where('id', $studentAnswer->question_id)->first();
             if ($studentAnswer->answer == $examQuestion->answer){
                 $score+=1;
             }

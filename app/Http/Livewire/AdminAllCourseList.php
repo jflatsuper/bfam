@@ -7,18 +7,27 @@ use Livewire\Component;
 
 class AdminAllCourseList extends Component
 {
-    public $courses;
+    public $category;
+    public $searchResult;
 
-    public function mount(){
-        $this->fetchAllCourses();
-    }
-
-    public function fetchAllCourses(){
-        $this->courses = Course::all();
+    public function updated(){
+        if ($this->category){
+            $this->searchResult = Course::where('category', $this->category)->get();
+        }else{
+            $this->searchResult = null;
+        }
     }
 
     public function render()
     {
-        return view('livewire.admin.components.admin-all-course-list');
+        if ($this->searchResult){
+            return view('livewire.admin.components.admin-all-course-list', [
+                'courses'   => $this->searchResult
+            ]);
+        }
+        return view('livewire.admin.components.admin-all-course-list', [
+            'courses'   => Course::all()
+        ]);
+
     }
 }

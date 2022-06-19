@@ -11,8 +11,9 @@ class StudentViewController extends Controller
         return view('livewire.student.pages.student-dashboard');
     }
 
-    public function exam(){
-        return view('livewire.student.pages.student-exam-page');
+    public function exam($course_id){
+        $course = Course::find($course_id);
+        return view('livewire.student.pages.student-exam-page', ['course' => $course]);
     }
 
     public function courses(){

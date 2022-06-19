@@ -28,7 +28,7 @@ class CreateCourseForm extends Component
           'title'       => 'required|string|max:255',
           'category'    => 'required|string|max:255',
           'description' => 'required|string|max:4000',
-          'image'       => 'required|image|max:5000|dimensions:width=480,height=270'
+          'image'       => 'required|image|max:5000'
         ]);
     }
 
@@ -37,7 +37,7 @@ class CreateCourseForm extends Component
             'title'       => 'required|string|max:255',
             'category'    => 'required|string|max:255',
             'description' => 'required|string|max:4000',
-            'image'       => 'required|image|max:5000|dimensions:width=480,height=270'
+            'image'       => 'required|image|max:5000'
         ]);
 
         $cover_image = $this->image->store('/', 'images');

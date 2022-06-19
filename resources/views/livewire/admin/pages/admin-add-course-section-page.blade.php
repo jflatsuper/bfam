@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="st_title"><i class="uil uil-analysis"></i> Add course section</h2>
+                <h2 class="st_title"><i class="uil uil-analysis"></i> Add course module</h2>
             </div>
         </div>
         <div class="row">
@@ -13,7 +13,7 @@
                     <div id="add-course-tab" class="step-app">
                         <ul class="step-steps">
                             <li class="active">
-                                <a href="#tab_step1">
+                                <a href="{{route('admin.edit-course', $course->id)}}">
                                     <span class="number"></span>
                                     <span class="step-name">General Information</span>
                                 </a>
@@ -21,7 +21,7 @@
                             <li class="active">
                                 <a href="#tab_step2">
                                     <span class="number"></span>
-                                    <span class="step-name">Add sections</span>
+                                    <span class="step-name">Add modules</span>
                                 </a>
                             </li>
                             <li>

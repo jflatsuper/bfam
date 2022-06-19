@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\CourseSectionVideos;
+use App\Models\ExamCompletedStatus;
 use App\Models\LastPlayedContent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -18,11 +19,20 @@ class StudentCourseDetails extends Component
     public $comments = [];
     public $comment;
 
+    public $isCompleted;
+
+    public $viewPDF;
+
     protected $listeners = [
         'refreshAdminCourseDetails' => 'fetchCourse'
     ];
+    public function openPDFView(){
+        $this->viewPDF = true;
+    }
+
 
     public function mount($course){
+
         $this->course = $course;
         // fetch lastContent
         $lastPlayed  = LastPlayedContent::where('user_id', Auth::user()->id)->where('course_id', $this->course->id)->first();
@@ -30,6 +40,17 @@ class StudentCourseDetails extends Component
             $this->currentContent = 1;
         }else{
             $this->currentContent = $lastPlayed->content;
+
+            if ($lastPlayed->content->video){
+                $this->viewPDF = false;
+            }elseif(!$lastPlayed->content->video && $lastPlayed->content->material){
+                $this->openPDFView();
+            }
+        }
+
+        $status =  ExamCompletedStatus::where('course_id', $this->course->id)->where('user_id', Auth::user()->id)->first();
+        if ($status->status){
+            $this->isCompleted = true;
         }
 
         $this->fetchComments();
@@ -41,6 +62,12 @@ class StudentCourseDetails extends Component
             'last_content'  => $content_id
         ]);
         $this->currentContent = $content;
+
+        if ($content->video){
+            $this->viewPDF = false;
+        }elseif(!$content->video && $content->material){
+            $this->openPDFView();
+        }
     }
 
     public function fetchCourse(){

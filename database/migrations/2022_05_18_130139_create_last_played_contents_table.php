@@ -15,8 +15,8 @@ class CreateLastPlayedContentsTable extends Migration
     {
         Schema::create('last_played_contents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained('courses');
-            $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('course_id');
+            $table->bigInteger('user_id');
             $table->bigInteger('last_content');
             $table->timestamps();
         });

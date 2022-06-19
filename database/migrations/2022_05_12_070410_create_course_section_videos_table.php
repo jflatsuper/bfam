@@ -17,9 +17,9 @@ class CreateCourseSectionVideosTable extends Migration
             $table->id();
             $table->bigInteger('course_section_id');
             $table->string('title');
-            $table->string('video');
+            $table->string('video')->nullable();
             $table->string('material')->nullable();
-            $table->bigInteger('sort')->unique();
+            $table->bigInteger('sort');
             $table->timestamps();
         });
     }

@@ -26,12 +26,19 @@
 {{--                            <video controls style="max-width: 100%" src="{{$course->sections->first()->contents->first()->VideoContent}}">--}}
 
 {{--                            </video>--}}
-
-                            @if($currentContent)
+                                 @if($currentContent)
                                 @if($currentContent !== 1)
-                                    <video controls autoplay style="max-width: 100%" src="{{$currentContent->VideoContent}}">
+                                    @if($viewPDF)
+                                        <iframe id="fred" style="border:1px solid #666CCC" title="PDF in an i-Frame" src="{{$currentContent->VideoMaterial}}" frameborder="1" scrolling="auto" height="1100" width="850" ></iframe>
+                                    @else
+                                        @if($currentContent->video)
+                                            <video controls autoplay style="max-width: 100%" src="{{$currentContent->VideoContent}}">
 
-                                    </video>
+                                            </video>
+                                        @else
+                                            <img width="100%" src="{{asset('images/courses/add_video.jpg')}}" alt="">
+                                        @endif
+                                    @endif
                                 @else
                                     <img width="100%" src="{{asset('images/courses/add_video.jpg')}}" alt="">
                                 @endif
@@ -39,7 +46,34 @@
                         </div>
                         <div class="user_dt5">
                             <div class="user_dt_left">
+                                <div class="_215b10 mt-4">
+
+                                    @if($isCompleted)
+                                    <a href="{{route('student.exam', $course->id)}}">
+                                        <button class="btn_adcart">
+                                            Certification
+                                        </button>
+                                    </a>
+                                    @else
+                                        <a href="{{route('student.exam', $course->id)}}">
+                                            <button class="btn_adcart">
+                                                Examination
+                                            </button>
+                                        </a>
+                                    @endif
+                                    @if($currentContent)
+                                        @if($currentContent !== 1)
+                                            @if($currentContent->material)
+                                                <a class="btn btn-outline-primary" href="#"  wire:click="openPDFView" style="margin-left: 40px;"><span class="fa fa-file-archive"></span> View attached document</a>
+                                            @endif
+                                        @else
+                                        @endif
+                                    @endif
+
+                                </div>
                             </div>
+
+
                             <div class="user_dt_right">
                                 <ul>
                                     <li>
@@ -89,8 +123,12 @@
                                                         </div>
                                                         <div class="section-header-right">
 
-                                                            <span class="num-items-in-section">{{count($section->contents)}} lectures</span>
-                                                            <span class="section-header-length">{{$section->updated_at->diffForHumans()}}</span>
+                                                            @if(count($section->contents) > 1)
+                                                                <span class="num-items-in-section">{{count($section->contents)}} contents</span>
+                                                            @else
+                                                                <span class="num-items-in-section">{{count($section->contents)}} content</span>
+                                                            @endif
+
                                                         </div>
                                                     </a>
                                                     <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
@@ -102,9 +140,6 @@
                                                                         <div class="top">
                                                                             <div class="title">
                                                                                 <span style="cursor: pointer" wire:click="select({{$content->id}})">{{$content->title}}</span>
-                                                                                @if($content->material)
-                                                                                    <a target="_blank" href="{{$content->VideoMaterial}}"><span class="fa fa-file-archive"></span> Material</a>
-                                                                                @endif
                                                                             </div>
 
                                                                         </div>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\UserCreated;
+use App\Mail\WelcomeMail;
 use App\Models\StudentProfile;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class StudentRegister extends Component
@@ -49,6 +52,8 @@ class StudentRegister extends Component
       StudentProfile::create([
         'user_id'   => $user->id
       ]);
+
+        Mail::to($user->email)->send(new UserCreated($user));
 
         $user->attachRole('student');
         $this->reset();

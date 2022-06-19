@@ -32,4 +32,8 @@ class Course extends Model
         return $this->hasMany(StudentRegisteredCourses::class, 'course_id');
     }
 
+    public function questions(){
+        return $this->hasMany(ExamQuestion::class, 'course_id')->orderBy('sort', 'ASC');
+    }
+
 }

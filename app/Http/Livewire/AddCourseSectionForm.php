@@ -41,7 +41,7 @@ class AddCourseSectionForm extends Component
         ]);
 
         $this->resetExcept(['course']);
-        $this->emit('alert', ['type' => 'success', 'message' => 'Section created']);
+        $this->emit('alert', ['type' => 'success', 'message' => 'Module created']);
         return redirect(route('admin.add-course-section-content', $section->id));
     }
 

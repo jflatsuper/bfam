@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-        @livewire('student-exam')
+        @livewire('student-exam', ['course' => $course])
     </div>
 @endsection

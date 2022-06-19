@@ -63,7 +63,7 @@ class AdminEditCourseForm extends Component
         ]);
 
         $this->emit('alert', ['type' => 'success', 'message' => 'Course updated']);
-        return redirect(route('admin.course-details', $this->course->id));
+        return redirect(route('admin.add-course-section', $this->course->id));
     }
 
 

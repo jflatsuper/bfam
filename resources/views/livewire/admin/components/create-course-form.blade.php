@@ -12,7 +12,6 @@
                                 <label>Course Title*</label>
                                 <div class="ui left icon input swdh19">
                                     <input class="prompt srch_explore {{$errors->has('title')? 'is-invalid' : '' }}" wire:model.lazy="title" type="text" placeholder="Insert your course title." name="title" data-purpose="edit-course-title" maxlength="60" id="main[title]" value="">
-                                    <div class="badge_num">60</div>
                                 </div>
                                 @error('title') <span style="color: crimson; font-size: 10px;" >{{ $message }}</span> @enderror
                             </div>
@@ -21,7 +20,7 @@
                             <div class="mt-30 lbel25">
                                 <label>Course Category*</label>
                             </div>
-                            <select wire:ignore.self wire:model.lazy="category" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                            <select wire:model.lazy="category"  style="border-radius: 40px; height: 40px;" class="ui hj145 form-control  cntry152 prompt srch_explore ">
                                 <option value="">Select Category</option>
                                 @if(count($categories) > 0)
                                     @foreach($categories as $category)
@@ -54,7 +53,7 @@
                                 <div wire:loading wire:target="image" >
                                     Validating cover image <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
-                                <label wire:loading.remove wire:target="image">Course Cover Image*(480x270)</label>
+                                <label wire:loading.remove wire:target="image">Course Cover Image*</label>
                                 <div class="ui left icon input swdh19">
                                     <input class="prompt srch_explore {{$errors->has('image')? 'is-invalid' : '' }}" wire:model.lazy="image" type="file">
                                 </div>
@@ -68,8 +67,8 @@
                         <button type="button" disabled wire:loading wire:target="createCourse" class="btn btn-primary">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
-                        <button type="submit"  wire:loading.remove wire:target="createCourse" class="btn btn-primary">
-                            CREATE COURSE
+                        <button type="submit" wire:loading.remove wire:target="createCourse" class="btn btn-primary">
+                            NEXT >>
                         </button>
                     </div>
                 </div>

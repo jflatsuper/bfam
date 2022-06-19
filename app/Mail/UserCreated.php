@@ -29,6 +29,6 @@ class UserCreated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.welcome')->subject('Please confirm your account');
+        return $this->markdown('emails.welcome')->subject('Welcome to BFAM Bible Club');
     }
 }

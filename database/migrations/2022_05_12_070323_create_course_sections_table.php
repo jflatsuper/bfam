@@ -15,9 +15,9 @@ class CreateCourseSectionsTable extends Migration
     {
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained('courses');
+            $table->bigInteger('course_id');
             $table->string('title');
-            $table->bigInteger('sort')->unique();
+            $table->bigInteger('sort');
             $table->timestamps();
         });
     }
